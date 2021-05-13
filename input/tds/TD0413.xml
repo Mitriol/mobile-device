@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<technical-decisions xmlns:htm="http://www.w3.org/1999/xhtml"
+                     xmlns="https://niap-ccevs.org/cc/v1">
+    <bunch>
+        <!--
+         Replace entire f-elements from the base PP and update - f-components?
+         Non-SFR changes made using XPATH expressions
+        -->
+        <applies-to max-inclusive="3.1" name="Mobile Device Fundamentals"/>
+
+        <decision id='0413'>
+            <notes>Conformance Claim to allow for a PP-Module</notes>
+
+            <change xpath=".//chapter[@id='ccconf']" mode="replace">
+                <chapter id="ccconf" title="CC Conformance">
+                    As defined by the references<cite linkend="CC"/>, this
+                    <abbr linkend="PP"/>
+                    conforms to the requirements of Common Criteria v3.1, Revision 4. The methodology applied for the
+                    <abbr linkend="PP"/>
+                    evaluation is defined in<cite linkend="CEM"/>.
+                    <htm:br/>
+                    <htm:br/>
+                    This
+                    <abbr linkend="PP"/>
+                    satisfies the following Assurance Families: APE_CCL.1, APE_ECD.1, APE_INT.1, APE_OBJ.2, APE_REQ.1
+                    and APE_SPD.1.
+                    The following PP-Modules are allowed to be specified in a PP-Configuration with this PP.
+                    <htm:br/>
+                    <htm:br/>
+                    PP-Module for VPN Client, Version 2.1
+
+                </chapter>
+            </change>
+        </decision>
+    </bunch>
+</technical-decisions>

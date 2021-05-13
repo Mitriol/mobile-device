@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<technical-decisions xmlns:htm="http://www.w3.org/1999/xhtml"
+                     xmlns="https://niap-ccevs.org/cc/v1">
+    <bunch>
+        <!--
+         Replace entire f-elements from the base PP and update - f-components?
+         Non-SFR changes made using XPATH expressions
+        -->
+        <applies-to max-inclusive="3.1" name="Mobile Device Fundamentals"/>
+
+        <decision id='0244'>
+            <notes>FCS_TLSC_EXT - TLS Client Curves Allowed</notes>
+            <change xpath=".//f-element[@id='fcs_tlsc_ext.2.1']" mode="replace">
+                <f-element id="fcs_tlsc_ext.2.1">
+                    <title>The TSF shall present the Supported Elliptic Curves Extension in the Client Hello handshake
+                        message with the following NIST curves:
+                        <selectables>
+                            <selectable>secp256r1</selectable>
+                            <selectable>secp384r1</selectable>
+                            <selectable>secp521r1</selectable>
+                        </selectables>
+                        .
+                    </title>
+                    <note role="application">If an elliptic-curve ciphersuite is selected in<linkref
+                            linkend="FCS_TLSC_EXT.1.1"/>, then
+                        <linkref linkend="FCS_TLSC_EXT.2.1"/>
+                        shall be included in the ST. This requirement does not limit the elliptic curves the client may
+                        propose for authentication and key agreement. Rather, it asks the ST author to define which of
+                        the NIST curves from FCS_COP.1(3) and FCS_CKM.1 and FCS_CKM.2(1) the TOE supports. This
+                        extension is required for clients supporting Elliptic Curve ciphersuites.
+                    </note>
+                    <aactivity>The evaluator shall verify that TSS describes the Supported Elliptic Curves Extension and
+                        whether the required behavior is performed by default or may be configured. If the TSS indicates
+                        that the Supported Elliptic Curves Extension must be configured to meet the requirement, the
+                        evaluator shall verify that AGD guidance includes configuration of the Supported Elliptic Curves
+                        Extension.
+                        <htm:br></htm:br>
+                        <htm:br></htm:br>
+                        <testlist>
+                            <test>The evaluator shall configure a server to perform ECDHE key exchange using each of the
+                                TOE’s supported curves and shall verify that the TOE successfully connects to the
+                                server.
+                            </test>
+                        </testlist>
+                    </aactivity>
+                </f-element>
+            </change>
+        </decision>
+    </bunch>
+</technical-decisions>

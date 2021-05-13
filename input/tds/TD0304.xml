@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<technical-decisions xmlns:htm="http://www.w3.org/1999/xhtml"
+                     xmlns="https://niap-ccevs.org/cc/v1">
+    <bunch>
+        <!--
+         Replace entire f-elements from the base PP and update - f-components?
+         Non-SFR changes made using XPATH expressions
+        -->
+        <applies-to max-inclusive="3.1" name="Mobile Device Fundamentals"/>
+
+        <decision id='0304'>
+            <notes>Update to FCS_TLSC_EXT.1.2</notes>
+            <change xpath=".//f-element[@id='fcs_tlsc_ext.1.2']" mode="replace">
+                <f-element id="fcs_tlsc_ext.1.2">
+                    <title>The TSF shall verify that the presented identifier matches the reference identifier according
+                        to RFC 6125.
+                    </title>
+                    <note role="application">The rules for verification of identify are described in Section 6 of RFC
+                        6125. The reference identifier is established by the user (e.g. entering a URL into a web
+                        browser or clicking a link), by configuration (e.g. configuring the name of a mail server or
+                        authentication server), or by an application (e.g. a parameter of an API) depending on the
+                        application service. Based on a singular reference identifier’s source domain and application
+                        service type (e.g. HTTP, SIP, LDAP), the client establishes all reference identifiers which are
+                        acceptable, such as a Common Name for the Subject Name field of the certificate and a
+                        (case-insensitive) DNS name, URI name, and Service Name for the Subject Alternative Name field.
+                        The client then compares this list of all acceptable reference identifiers to the presented
+                        identifiers in the TLS server’s certificate.
+                        <htm:br></htm:br>
+                        <htm:br></htm:br>
+                        The preferred method for verification is the Subject Alternative Name using DNS names, URI
+                        names, or Service Names. Verification using the Common Name is required for the purposes of
+                        backwards compatibility. Additionally, support for use of IP addresses in the Subject Name or
+                        Subject Alternative name is discouraged as against best practices but may be implemented.
+                        Finally, the client should avoid constructing reference identifiers using wildcards. However, if
+                        the presented identifiers include wildcards, the client must follow the best practices regarding
+                        matching; these best practices are captured in the assurance activity.
+                    </note>
+                    <aactivity>The evaluator shall ensure that the TSS describes the client’s method of establishing all
+                        reference identifiers from the application-configured reference identifier, including which
+                        types of reference identifiers are supported (e.g. Common Name, DNS Name, URI Name, Service
+                        Name, or other application-specific Subject Alternative Names) and whether IP addresses and
+                        wildcards are supported. The evaluator shall ensure that this description identifies whether and
+                        the manner in which certificate pinning is supported or used by the TOE.
+                        <htm:br></htm:br>
+                        <htm:br></htm:br>
+                        The evaluator shall verify that the AGD guidance includes instructions for setting the reference
+                        identifier to be used for the purposes of certificate validation in TLS. In particular, the AGD
+                        guidance should describe the API used by applications for configuring the reference identifier.
+                        <htm:br></htm:br>
+                        <htm:br></htm:br>
+                        The evaluator shall configure the reference identifier according to the AGD guidance and perform
+                        the following tests during a TLS connection:
+                        <testlist>
+                            <test>The evaluator shall present a server certificate that does not contain an identifier
+                                in either the Subject Alternative Name (SAN) or Common Name (CN) that matches the
+                                reference identifier. The evaluator shall verify that the connection fails.
+                            </test>
+                            <test>The evaluator shall present a server certificate that contains a CN that matches the
+                                reference identifier, contains the SAN extension, but does not contain an identifier in
+                                the SAN that matches the reference identifier. The evaluator shall verify that the
+                                connection fails. The evaluator shall repeat this test for each supported SAN type.
+                            </test>
+                            <test>[conditional]: If the TOE does not mandate the presence of the SAN extension, the
+                                evaluator shall present a server certificate that contains a CN that matches the
+                                reference identifier and does not contain the SAN extension. The evaluator shall verify
+                                that the connection succeeds. If the TOE does mandate the presence of the SAN extension,
+                                this Test shall be omitted.
+                            </test>
+                            <test>The evaluator shall present a server certificate that contains a CN that does not
+                                match the reference identifier but does contain an identifier in the SAN that matches.
+                                The evaluator shall verify that the connection succeeds.
+                            </test>
+                            <test>The evaluator shall perform the following wildcard tests with each supported type of
+                                reference identifier:
+                                <htm:ul>
+                                    <htm:li>The evaluator shall present a server certificate containing a wildcard that
+                                        is not in the left-most label of the presented identifier (e.g.
+                                        foo.*.example.com) and verify that the connection fails.
+                                    </htm:li>
+                                    <htm:li>The evaluator shall present a server certificate containing a wildcard in
+                                        the left-most label but not preceding the public suffix (e.g. *.example.com).
+                                        The evaluator shall configure the reference identifier with a single left-most
+                                        label (e.g. foo.example.com) and verify that the connection succeeds. The
+                                        evaluator shall configure the reference identifier without a left-most label as
+                                        in the certificate (e.g. example.com) and verify that the connection fails. The
+                                        evaluator shall configure the reference identifier with two left-most labels
+                                        (e.g. bar.foo.example.com) and verify that the connection fails.
+                                    </htm:li>
+                                    <htm:li>The evaluator shall present a server certificate containing a wildcard in
+                                        the left-most label immediately preceding the public suffix (e.g. *.com). The
+                                        evaluator shall configure the reference identifier with a single left-most label
+                                        (e.g. foo.com) and verify that the connection fails. The evaluator shall
+                                        configure the reference identifier with two left-most labels (e.g. bar.foo.com)
+                                        and verify that the connection fails.
+                                    </htm:li>
+                                </htm:ul>
+                            </test>
+                            <test>[conditional] If URI or Service name reference identifiers are supported, the
+                                evaluator shall configure the DNS name and the service identifier. The evaluator shall
+                                present a server certificate containing the correct DNS name and service identifier in
+                                the URIName or SRVName fields of the SAN and verify that the connection succeeds. The
+                                evaluator shall repeat this test with the wrong service identifier (but correct DNS
+                                name) and verify that the connection fails.
+                            </test>
+                            <test>[conditional] If pinned certificates are supported the evaluator shall present a
+                                certificate that does not match the pinned certificate and verify that the connection
+                                fails.
+                            </test>
+                        </testlist>
+                    </aactivity>
+                </f-element>
+            </change>
+        </decision>
+    </bunch>
+</technical-decisions>

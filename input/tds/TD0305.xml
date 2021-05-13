@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<technical-decisions xmlns:htm="http://www.w3.org/1999/xhtml"
+                     xmlns="https://niap-ccevs.org/cc/v1">
+    <bunch>
+        <!--
+         Replace entire f-elements from the base PP and update - f-components?
+         Non-SFR changes made using XPATH expressions
+        -->
+        <applies-to max-inclusive="3.1" name="Mobile Device Fundamentals"/>
+
+        <decision id='0305'>
+            <notes>Handling of TLS connections with and without mutual authentication</notes>
+            <change xpath=".//f-element[@id='fcs_tlsc_ext.1.4']" mode="replace">
+                <f-element id="fcs_tlsc_ext.1.4">
+                    <title>The TSF shall support mutual authentication using X.509v3 certificates.
+                    </title>
+                    <note role="application">The use of X.509v3 certificates for TLS is addressed in<linkref
+                            linkend="FIA_X509_EXT.2.1"/>. This requirement adds that this use must include the client
+                        must be capable of presenting a certificate to a TLS server for TLS mutual authentication.
+                    </note>
+                    <aactivity>The evaluator shall ensure that the TSS description required per
+                        <linkref linkend="FIA_X509_EXT.2.1"/>
+                        includes the use of client-side certificates for TLS mutual authentication.
+                        <htm:br></htm:br>
+                        <htm:br></htm:br>
+                        The evaluator shall verify that the AGD guidance required per
+                        <linkref linkend="FIA_X509_EXT.2.1"/>
+                        includes instructions for configuring the client-side certificates for TLS mutual
+                        authentication.
+                        <htm:br></htm:br>
+                        <htm:br></htm:br>
+                        The evaluator shall also perform the following test:
+                        <testlist>
+                            <test>The evaluator shall establish a connection to a peer server that is not configured for
+                                mutual authentication (i.e. does not send Server’s Certificate Request (type 13)
+                                message). The evaluator observes negotiation of a TLS channel and confirms that the TOE
+                                did not send Client’s Certificate message (type 11) during handshake.
+                            </test>
+                            <test>The evaluator shall establish a connection to a peer server with a shared trusted root
+                                that is configured for mutual authentication (i.e. it sends Server’s Certificate Request
+                                (type 13) message). The evaluator observes negotiation of a TLS channel and confirms
+                                that the TOE responds with a non-empty Client’s Certificate message (type 11) and
+                                Certificate Verify (type 15) message.
+                            </test>
+                        </testlist>
+                    </aactivity>
+                </f-element>
+            </change>
+        </decision>
+    </bunch>
+</technical-decisions>

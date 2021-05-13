@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<technical-decisions xmlns:htm="http://www.w3.org/1999/xhtml"
+                     xmlns="https://niap-ccevs.org/cc/v1">
+    <bunch>
+        <!--
+         Replace entire f-elements from the base PP and update - f-components?
+         Non-SFR changes made using XPATH expressions
+        -->
+        <applies-to max-inclusive="3.1" name="Mobile Device Fundamentals"/>
+
+        <decision id='0426'>
+            <notes>Correction of Inconsistency with RFC7748</notes>
+            <change xpath=".//f-element[@id='fcs_ckm.1.1']" mode="replace">
+                <f-element id="fcs_ckm.1.1">
+                    <title>The
+                        <abbr linkend="TSF"/>
+                        shall generate <refinement>asymmetric</refinement> cryptographic keys in accordance with a
+                        specified cryptographic key generation algorithm
+                        <selectables linebreak="yes">
+                            <selectable>
+                                <refinement>RSA schemes using</refinement>
+                                cryptographic key sizes of <refinement>2048-bit or greater</refinement> that meet
+                                <refinement>FIPS PUB 186-4, “Digital Signature Standard (DSS)”, Appendix B.3
+                                </refinement>
+                            </selectable>
+                            <selectable>
+                                <refinement>ECC schemes using</refinement>
+                                <selectables linebreak="yes">
+                                    <selectable>
+                                        <refinement>“NIST curves” P-384 and</refinement>
+                                        <selectables>
+                                            <selectable>
+                                                <refinement>P-256</refinement>
+                                            </selectable>
+                                            <selectable>
+                                                <refinement>P-521</refinement>
+                                            </selectable>
+                                            <selectable>
+                                                <refinement>no other curves</refinement>
+                                            </selectable>
+                                        </selectables>
+                                        that meet the following:
+                                        <refinement>FIPS PUB 186-4, “Digital Signature Standard (DSS)”, Appendix B.4
+                                        </refinement>
+                                    </selectable>
+                                    <selectable>
+                                        <refinement>Curve25519 schemes that meet the following: RFC 7748</refinement>
+                                    </selectable>
+                                </selectables>
+                            </selectable>
+                            <selectable><refinement>FFC schemes using</refinement>cryptographic key sizes of <refinement>
+                                2048-bit or greater
+                            </refinement> that meet the following:
+                                <refinement>FIPS PUB 186-4, “Digital Signature Standard (DSS)”, Appendix B.1
+                                </refinement>
+                            </selectable>
+                        </selectables>
+                        .
+                    </title>
+                    <note role="application">
+                        The
+                        <abbr linkend="ST"/>
+                        author shall select all key generation schemes used for key establishment and entity
+                        authentication. When key generation is used for key establishment, the schemes in
+                        <linkref linkend="FCS_CKM.2.1(1)"/>
+                        and selected cryptographic protocols must match the selection. When key generation is used for
+                        entity authentication, the public key may be associated with an X.509v3 certificate.
+                        <htm:br/>
+                        <htm:br/>
+                        If the
+                        <abbr linkend="TOE"/>
+                        acts as a receiver in the RSA key establishment scheme, the
+                        <abbr linkend="TOE"/>
+                        does not need to implement RSA key generation.
+                        <htm:br/>
+                        <htm:br/>
+                        Curve25519 can only be used for ECDH and in conjunction with<linkref linkend="FDP_DAR_EXT.2.2"/>
+                        .
+                    </note>
+                    <aactivity>
+                        The evaluator shall ensure that the
+                        <abbr linkend="TSS"/>
+                        identifies the key sizes supported by the<abbr linkend="TOE"/>. If the
+                        <abbr linkend="ST"/>
+                        specifies more than one scheme, the evaluator shall examine the
+                        <abbr linkend="TSS"/>
+                        to verify that it identifies the usage for each scheme.
+                        <htm:br/>
+                        <htm:br/>
+                        The evaluator shall verify that the AGD guidance instructs the administrator how to configure
+                        the
+                        <abbr linkend="TOE"/>
+                        to use the selected key generation scheme(s) and key size(s) for all uses defined in this<abbr
+                            linkend="PP"/>.
+                        <htm:br/>
+                        <htm:br/>
+                        <htm:i>Assurance Activity Note: The following tests require the developer to provide access to a
+                            test platform that provides the evaluator with tools that are typically not found on factory
+                            products.
+                        </htm:i>
+                        <htm:br/>
+                        <htm:br/>
+                        <htm:i>
+                            <htm:b>Key Generation for FIPS PUB 186-4 RSA Schemes</htm:b>
+                        </htm:i>
+                        <htm:br/>
+                        <htm:br/>
+                        The evaluator shall verify the implementation of RSA Key Generation by the
+                        <abbr linkend="TOE"/>
+                        using the Key
+                        Generation test. This test verifies the ability of the
+                        <abbr linkend="TSF"/>
+                        to correctly produce values for the
+                        key components including the public verification exponent <htm:i>e</htm:i>, the private
+                        prime factors <htm:i>p</htm:i> and <htm:i>q</htm:i>,
+                        the public modulus n and the calculation of the private signature exponent <htm:i>d</htm:i>.
+                        <htm:br/>
+                        <htm:br/>
+                        Key Pair generation specifies 5 ways (or methods) to generate the primes <htm:i>p
+                    </htm:i> and <htm:i>q</htm:i>. These include:
+                        <htm:ol>
+                            <htm:li>Random Primes:
+                                <htm:ul>
+                                    <htm:li>Provable primes</htm:li>
+                                    <htm:li>Probable primes</htm:li>
+                                </htm:ul>
+                            </htm:li>
+                            <htm:li>Primes with Conditions:
+                                <htm:ul>
+                                    <htm:li>Primes p1, p2, q1,q2, p and q shall all be provable primes</htm:li>
+                                    <htm:li>Primes p1, p2, q1, and q2 shall be provable primes and p and q shall be
+                                        probable primes
+                                    </htm:li>
+                                    <htm:li>Primes p1, p2, q1,q2, p and q shall all be probable primes</htm:li>
+                                </htm:ul>
+                            </htm:li>
+                        </htm:ol>
+                        To test the key generation method for the Random Provable primes method and for all the Primes
+                        with Conditions methods, the evaluator must seed the
+                        <abbr linkend="TSF"/>
+                        key generation routine with sufficient data to deterministically generate the RSA key pair. This
+                        includes the random seed(s), the public exponent of the RSA key, and the desired key length. For
+                        each key length supported, the evaluator shall have the
+                        <abbr linkend="TSF"/>
+                        generate 25 key pairs. The evaluator shall verify the correctness of the<abbr linkend="TSF"/>’s
+                        implementation by comparing values generated by the
+                        <abbr linkend="TSF"/>
+                        with those generated from a known good implementation.
+                        <htm:br/>
+                        <htm:br/>
+                        If possible, the Random Probable primes method should also be verified against a known good
+                        implementation as described above. Otherwise, the evaluator shall have the
+                        <abbr linkend="TSF"/>
+                        generate 10 keys pairs for each supported key length nlen and verify:
+                        <htm:ul>
+                            <htm:li>n = p*q</htm:li>
+                            <htm:li>p and q are probably prime according to Miller-Rabin tests</htm:li>
+                            <htm:li>GCD(p-1,e) = 1</htm:li>
+                            <htm:li>GCD(q-1,e) = 1</htm:li>
+                            <htm:li>2^16 &lt; e &lt; 2^256 and e is an odd integer</htm:li>
+                            <htm:li>|p-q| > 2^(nlen/2 – 100)</htm:li>
+                            <htm:li>p >= squareroot(2)*( 2^(nlen/2 -1) )</htm:li>
+                            <htm:li>q >= squareroot(2)*( 2^(nlen/2 -1) )</htm:li>
+                            <htm:li>2^(nlen/2) &lt; d &lt; LCM(p-1,q-1)</htm:li>
+                            <htm:li>e*d = 1 mod LCM(p-1,q-1)</htm:li>
+                        </htm:ul>
+                        <htm:br/>
+                        <htm:i>
+                            <htm:b>Key Generation for FIPS 186-4 Elliptic Curve Cryptography (ECC)</htm:b>
+                        </htm:i>
+                        <htm:br/>
+                        <htm:i>FIPS 186-4 ECC Key Generation Test</htm:i>
+                        <htm:br/>
+                        <htm:br/>
+                        For each supported NIST curve, i.e. P-256, P-384 and P-521, the evaluator shall require the
+                        implementation under test (IUT) to generate 10 private/public key pairs. The private key shall
+                        be generated using an approved random bit generator (RBG). To determine correctness, the
+                        evaluator shall submit the generated key pairs to the public key verification (PKV) function of
+                        a known good implementation.
+                        <htm:br/>
+                        <htm:br/>
+                        <htm:i>FIPS 186-4 Public Key Verification (PKV) Test</htm:i>
+                        <htm:br/>
+                        <htm:br/>
+                        For each supported NIST curve, i.e. P-256, P-384 and P-521, the evaluator shall generate 10
+                        private/public key pairs using the key generation function of a known good implementation and
+                        modify five of the public key values so that they are incorrect, leaving five values unchanged
+                        (i.e. correct). The evaluator shall obtain in response a set of 10 PASS/FAIL values.
+                        <htm:br/>
+                        <htm:br/>
+                        <htm:i>
+                            <htm:b>Key Generation for Curve25519</htm:b>
+                        </htm:i>
+                        <htm:br/>
+                        <htm:br/>
+                        The evaluator shall require the implementation under test (IUT) to generate 10 private/public
+                        key pairs. The private key shall be generated as specified in RFC 7748 using an approved random
+                        bit generator (RBG) and shall be written in little-endian order (least significant byte first).
+                        To determine correctness, the evaluator shall submit the generated key pairs to the public key
+                        verification (PKV) function of a known good implementation.
+                        <htm:br/>
+                        <htm:br/>
+                        Note: Assuming the PKV function of the good implementation will (using little-endian order):
+                        <htm:ol type="a">
+                            <htm:li>confirm the private and public keys are 32-byte values</htm:li>
+                            <htm:li>confirm the three least significant bits of the first byte of the private key are
+                                zero
+                            </htm:li>
+                            <htm:li>confirm the most significant bit of the last byte is zero</htm:li>
+                            <htm:li>confirm the second most significant bit of the last byte is one</htm:li>
+                            <htm:li>calculate the expected public key from the private key and confirm it matches the
+                                supplied public key
+                            </htm:li>
+                        </htm:ol>
+
+                        <htm:br/>
+                        <htm:br/>
+                        The evaluator shall generate 10 private/public key pairs using the key generation function of a
+                        known good implementation and modify 5 of the public key values so that they are incorrect,
+                        leaving five values unchanged (i.e. correct). The evaluator shall obtain in response a set of 10
+                        PASS/FAIL values.
+                        <htm:br/>
+                        <htm:br/>
+                        <htm:i>
+                            <htm:b>Key Generation for Finite-Field Cryptography (FFC)</htm:b>
+                        </htm:i>
+                        <htm:br/>
+                        The evaluator shall verify the implementation of the Parameters Generation and the Key
+                        Generation for FFC by the
+                        <abbr linkend="TOE"/>
+                        using the Parameter Generation and Key Generation test. This test verifies the ability of the
+                        <abbr linkend="TSF"/>
+                        to correctly produce values for the field prime p, the cryptographic prime q (dividing p-1), the
+                        cryptographic group generator g, and the calculation of the private key x and public key y.
+                        <htm:br/>
+                        The Parameter generation specifies 2 ways (or methods) to generate the cryptographic prime q and
+                        the field prime p:
+                        <htm:br/>
+                        <htm:br/>
+                        Cryptographic and Field Primes:
+                        <htm:br/>
+                        <htm:br/>
+                        <htm:ul>
+                            <htm:li>Primes q and p shall both be provable primes</htm:li>
+                            <htm:li>Primes q and field prime p shall both be probable primes</htm:li>
+                        </htm:ul>
+                        and two ways to generate the cryptographic group generator g:
+                        <htm:br/>
+                        <htm:br/>
+
+                        Cryptographic Group Generator:
+                        <htm:br/>
+                        <htm:br/>
+                        <htm:ul>
+                            <htm:li>Generator g constructed through a verifiable process</htm:li>
+                            <htm:li>Generator g constructed through an unverifiable process</htm:li>
+                        </htm:ul>
+                        The Key generation specifies 2 ways to generate the private key x:
+                        <htm:br/>
+                        <htm:br/>
+                        Private Key:
+                        <htm:br/>
+                        <htm:br/>
+                        <htm:ul>
+                            <htm:li>len(q) bit output of RBG where 1 &lt;= x &lt;= q-1</htm:li>
+                            <htm:li>len(q) + 64 bit output of RBG, followed by a mod q-1 operation where 1&lt;= x&lt;=q-1</htm:li>
+                        </htm:ul>
+                        The security strength of the RBG must be at least that of the security offered by the FFC
+                        parameter set.
+                        <htm:br/>
+                        <htm:br/>
+                        To test the cryptographic and field prime generation method for the provable primes method
+                        and/or the group generator g for a verifiable process, the evaluator must seed the
+                        <abbr linkend="TSF"/>
+                        parameter generation routine with sufficient data to deterministically generate the parameter
+                        set.
+                        <htm:br/>
+                        <htm:br/>
+
+                        For each key length supported, the evaluator shall have the
+                        <abbr linkend="TSF"/>
+                        generate 25 parameter sets and key pairs. The evaluator shall verify the correctness of the<abbr
+                            linkend="TSF"/>’s implementation by comparing values generated by the
+                        <abbr linkend="TSF"/>
+                        with those generated from a known good implementation. Verification must also confirm
+                        <htm:br/>
+                        <htm:ul>
+                            <htm:li>g != 0,1</htm:li>
+                            <htm:li>q divides p-1</htm:li>
+                            <htm:li>g^q mod p = 1</htm:li>
+                            <htm:li>g^x mod p = y</htm:li>
+                        </htm:ul>
+                        <htm:br/>
+                        for each FFC parameter set and key pair.
+                    </aactivity>
+                </f-element>
+            </change>
+        </decision>
+    </bunch>
+</technical-decisions>

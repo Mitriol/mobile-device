@@ -1,0 +1,21 @@
+xml_file = "./input/mobile-device.xml"
+short_name = "mdf"
+technical_decisions = [
+    "./input/tds/TD0244.xml",
+    "./input/tds/TD0301.xml",
+    "./input/tds/TD0304.xml",
+    "./input/tds/TD0305.xml",
+    "./input/tds/TD0346.xml",
+    "./input/tds/TD0347.xml",
+    "./input/tds/TD0351.xml",
+    "./input/tds/TD0366.xml",
+    "./input/tds/TD0369.xml",
+    "./input/tds/TD0371.xml",
+    "./input/tds/TD0413.xml",
+    "./input/tds/TD0426.xml",
+    "./input/tds/TD0468.xml",
+    "./input/tds/TD0502.xml",
+    "./input/tds/TD0523.xml",
+]
+type = "Base"
+schema = "1.0"

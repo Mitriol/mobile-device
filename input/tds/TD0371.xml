@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<technical-decisions xmlns:htm="http://www.w3.org/1999/xhtml"
+                     xmlns="https://niap-ccevs.org/cc/v1">
+    <bunch>
+        <!--
+         Replace entire f-elements from the base PP and update - f-components?
+         Non-SFR changes made using XPATH expressions
+        -->
+        <applies-to max-inclusive="3.1" name="Mobile Device Fundamentals"/>
+
+        <decision id='0371'>
+            <notes>Section F.2 [Use Case 2]</notes>
+            <change xpath=".//section[@id='usecase2']" mode="replace">
+                <section id="usecase2" title="[USE CASE 2] Enterprise-owned device for specialized, high-security use">
+                    <ctr id="uc2" pre="Table " ctr-type="table">: High Security Template</ctr>
+                    <htm:table>
+                        <htm:tr class="header">
+                            <htm:td>Requirement</htm:td>
+                            <htm:td>Action</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FCS_CKM.1.1"/>
+                            </htm:td>
+                            <htm:td>Select RSA with key size of 3072 or select ECC schemes.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FCS_CKM.2.1(1)"/>
+                            </htm:td>
+                            <htm:td>Select ECC schemes, if ECC schemes are selected in FCS_CKM.1.1.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FCS_CKM.2.1(2)"/>
+                            </htm:td>
+                            <htm:td>Select “RSA schemes” or select “ECC schemes that meet NIST SP 800-56A”.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FCS_CKM_EXT.1.1"/>
+                            </htm:td>
+                            <htm:td>If “symmetric” is selected then “256 bits” must be selected. If “asymmetric” is
+                                selected and RSA scheme is selected in FCS_CKM.1.1 then “128 bits” can be selected. If
+                                “asymmetric” is selected and ECC scheme is selected in FCS_CKM.1.1, then “192 bits” can
+                                be selected.
+                            </htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FCS_CKM_EXT.2.1"/>
+                            </htm:td>
+                            <htm:td>Select 256 bits.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FCS_CKM_EXT.3.1"/>
+                            </htm:td>
+                            <htm:td>If asymmetric KEKs is selected and RSA scheme is selected in FCS_CKM.1.1 then assign
+                                128 bits security strength. If asymmetric KEKs is selected and ECC scheme is selected in
+                                FCS_CKM.1.1 then assign 192 bits security strength. If symmetric KEKs is selected,
+                                select 256 bit security strength.
+                            </htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FCS_COP.1.1(1)"/>
+                            </htm:td>
+                            <htm:td>Select 256 bits.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FCS_COP.1.1(2)"/>
+                            </htm:td>
+                            <htm:td>Select SHA-384.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FCS_COP.1.1(3)"/>
+                            </htm:td>
+                            <htm:td>Assign a key size of 3072 for RSA or select ECDSA schemes.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FCS_COP.1.1(5)"/>
+                            </htm:td>
+                            <htm:td>Select 256 bits.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FCS_RBG_EXT.1.2"/>
+                            </htm:td>
+                            <htm:td>Select 256 bits.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FCS_TLSC_EXT.1.1"/>
+                            </htm:td>
+                            <htm:td>Select TLS_RSA_WITH_AES_256_GCM_SHA384 or TLS_ECDHE_ECDSA_WITH AES_256_GCM_SHA384.
+                            </htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FCS_TLSC_EXT.2.1"/>
+                            </htm:td>
+                            <htm:td>Select secp384r1, if included in ST (if ECC schemes are selected in FCS_CKM.1.1).
+                            </htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FDP_DAR_EXT.1.2"/>
+                            </htm:td>
+                            <htm:td>Select 256 bits.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FIA_X509_EXT.2.2"/>
+                            </htm:td>
+                            <htm:td>Select either “allow the administrator to choose...” or “not accept the
+                                certificate”.
+                            </htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FMT_MOF_EXT.1.2"/>
+                                Function 3
+                            </htm:td>
+                            <htm:td>Include in ST.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FMT_MOF_EXT.1.2"/>
+                                Function 4
+                            </htm:td>
+                            <htm:td>Assign all radios on TSF.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FMT_MOF_EXT.1.2"/>
+                                Function 5
+                            </htm:td>
+                            <htm:td>Assign all audio or visual collection devices on TSF.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FMT_MOF_EXT.1.2"/>
+                                Function 20
+                            </htm:td>
+                            <htm:td>Include in ST.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FMT_MOF_EXT.1.2"/>
+                                Function 22
+                            </htm:td>
+                            <htm:td>Include in ST.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FMT_MOF_EXT.1.2"/>
+                                Function 44
+                            </htm:td>
+                            <htm:td>Include in ST.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FMT_MOF_EXT.1.2"/>
+                                Function 45
+                            </htm:td>
+                            <htm:td>Include in ST (if IPsec is selected in FTP_ITC_EXT.1).</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FMT_SMF_EXT.1.1"/>
+                                Function 12
+                            </htm:td>
+                            <htm:td>Assign all X.509v3 certificates in the Trust Anchor Database.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FMT_SMF_EXT.1.1"/>
+                                Function 19
+                            </htm:td>
+                            <htm:td>Select “f. all notifications”.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FMT_SMF_EXT.1.1"/>
+                                Function 24
+                            </htm:td>
+                            <htm:td>Include in ST. Assign at least USB.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FMT_SMF_EXT.1.1"/>
+                                Function 25
+                            </htm:td>
+                            <htm:td>Include in ST. Assign all protocols where the TSF acts as a server.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FMT_SMF_EXT.1.1"/>
+                                Function 36
+                            </htm:td>
+                            <htm:td>Include in ST.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FMT_SMF_EXT.2.1"/>
+                            </htm:td>
+                            <htm:td>Select “wipe of protected data”, “wipe of sensitive data”.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FAU_SAR.1.1"/>
+                            </htm:td>
+                            <htm:td>Include in ST.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FAU_SAR.1.2"/>
+                            </htm:td>
+                            <htm:td>Include in ST.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FAU_SEL.1.1"/>
+                            </htm:td>
+                            <htm:td>Include in ST. Select “event type”, “success of auditable security events”, and
+                                “failure of auditable security events”.
+                            </htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FCS_SRV_EXT.2.1"/>
+                            </htm:td>
+                            <htm:td>Include in ST.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FPT_AEX_EXT.5.1"/>
+                            </htm:td>
+                            <htm:td>Include in ST.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FPT_AEX_EXT.5.2"/>
+                            </htm:td>
+                            <htm:td>Include in ST.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FPT_BBD_EXT.1.1"/>
+                            </htm:td>
+                            <htm:td>Include in ST.</htm:td>
+                        </htm:tr>
+                        <htm:tr>
+                            <htm:td>
+                                <linkref linkend="FTA_TAB.1.1"/>
+                            </htm:td>
+                            <htm:td>Include in ST.</htm:td>
+                        </htm:tr>
+                    </htm:table>
+                </section>
+            </change>
+        </decision>
+    </bunch>
+</technical-decisions>

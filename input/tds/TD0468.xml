@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<technical-decisions xmlns:htm="http://www.w3.org/1999/xhtml"
+                     xmlns="https://niap-ccevs.org/cc/v1">
+    <bunch>
+        <!--
+         Replace entire f-elements from the base PP and update - f-components?
+         Non-SFR changes made using XPATH expressions
+        -->
+        <applies-to max-inclusive="3.1" name="Mobile Device Fundamentals"/>
+
+        <decision id='0468'>
+            <notes>Bluetooth pairing vs connection</notes>
+            <change xpath=".//f-element[@id='fia_blt_ext.3.1']" mode="replace">
+                <f-element id="fia_blt_ext.3.1">
+                    <title>The
+                        <abbr linkend="TSF"/>
+                        shall discard pairing and session initialization attempts from a Bluetooth device address
+                        (BD_ADDR) to which an active session already exists.
+                    </title>
+                    <note role="application">Session is defined as the time interval for which the TSF is actively
+                        connected to another device. Thus, the session terminates when the device disconnects from the
+                        TSF. If the
+                        <abbr linkend="TOE"/>
+                        has an active session to a remote Bluetooth device, new session initialization and/or pairing
+                        attempts from devices claiming the same Bluetooth device address may be malicious and should be
+                        rejected/ignored. Only one session to a single remote BD_ADDR may be supported at a time.
+                    </note>
+                    <aactivity>The evaluator shall ensure that the
+                        <abbr linkend="TSS"/>
+                        describes how Bluetooth sessions are maintained such that two devices with the same Bluetooth
+                        device address are not simultaneously connected and such that the initial connection is not
+                        superseded by any following session initialization attempts.
+                        <htm:br/>
+                        <htm:br/>
+                        The evaluator shall perform the following test:
+                        <testlist>
+                            <test>The evaluator shall perform the following steps:
+                                <htm:br/>
+                                <htm:br/>
+                                Step 1: Pair the TOE with a remote Bluetooth device (DEV1) with a known address BD_ADDR.
+                                Establish an active session between the TOE and DEV1 with the known address BD_ADDR.
+                                <htm:br/>
+                                <htm:br/>
+                                Step 2: Attempt to pair a second remote Bluetooth device (DEV2) claiming to have a
+                                Bluetooth device address matching DEV1 BD_ADDR to the TOE. Using a Bluetooth protocol
+                                analyzer, verify that the pairing attempt by DEV2 is not completed by the TOE and that
+                                the active session to DEV1 is unaffected.
+                                <htm:br/>
+                                <htm:br/>
+                                Step 3: Attempt to initialize a session to the TOE from DEV2 containing address DEV1
+                                BD_ADDR. Using a Bluetooth protocol analyzer, verify that the session initialization
+                                attempt by DEV2 is ignored by the TOE and that the initial session to DEV1 is
+                                unaffected. Using a Bluetooth protocol analyzer, verify that the session initialization
+                                attempt by DEV2 is ignored by the TOE and that the initial session to DEV1 is
+                                unaffected.
+                            </test>
+                        </testlist>
+                    </aactivity>
+                </f-element>
+            </change>
+        </decision>
+    </bunch>
+</technical-decisions>
